@@ -37,7 +37,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-
     public void saveUser(String name, String lastName, byte age) {
 
         try (Connection connection = Util.getConnection()) {
@@ -56,8 +55,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) {
 
         try (Connection connection = Util.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM users WHERE id = " + id);
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = " + id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
