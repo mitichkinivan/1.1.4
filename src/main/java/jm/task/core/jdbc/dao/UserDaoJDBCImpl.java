@@ -21,6 +21,7 @@ public class UserDaoJDBCImpl implements UserDao {
                     "name VARCHAR(50), " +
                     "lastName VARCHAR (50), " +
                     "age TINYINT , PRIMARY KEY (id))");
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -31,6 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DROP TABLE IF EXISTS users");
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,6 +48,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,6 +60,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = " + id);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,14 +74,16 @@ public class UserDaoJDBCImpl implements UserDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
 
-            while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setAge(resultSet.getByte("age"));
-                arr.add(user);
-            }
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setId(resultSet.getLong("id"));
+                    user.setName(resultSet.getString("name"));
+                    user.setLastName(resultSet.getString("lastName"));
+                    user.setAge(resultSet.getByte("age"));
+                    arr.add(user);
+                }
+                resultSet.close();
+                statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,6 +95,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate("TRUNCATE TABLE users");
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
