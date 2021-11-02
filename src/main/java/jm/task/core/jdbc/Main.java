@@ -9,12 +9,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         UserService userService = new UserServiceImpl();
 
         final User user1 = new User("Ivan", "Ivanov", (byte) 25);
-        User user2 = new User("Vladimir", "Vladimirov", (byte) 44);
-        User user3 = new User("Petr", "Petrov", (byte) 55);
-        User user4 = new User("Viktor", "Viktorov", (byte) 22);
+        final User user2 = new User("Vladimir", "Vladimirov", (byte) 44);
+        final User user3 = new User("Petr", "Petrov", (byte) 55);
+        final User user4 = new User("Viktor", "Viktorov", (byte) 22);
 
         userService.createUsersTable();
 
