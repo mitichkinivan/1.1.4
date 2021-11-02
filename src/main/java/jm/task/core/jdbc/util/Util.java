@@ -52,6 +52,7 @@ public class Util {
         }
         return sessionFactory;
     }
+
     private static String URL = "jdbc:mysql://localhost:3306/test";
     private static String USERNAME = "root";
     private static String PASSWORD = "root1";
