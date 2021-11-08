@@ -11,9 +11,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-
     public void createUsersTable() {
-
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS users " +
                     "(id INTEGER not NULL AUTO_INCREMENT, " +
@@ -63,17 +61,17 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> arr = new ArrayList<>();
 
         try (Statement statement = Util.getConnection().createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM users")) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
 
-                while (resultSet.next()) {
-                    User user = new User();
-                    user.setId(resultSet.getLong("id"));
-                    user.setName(resultSet.getString("name"));
-                    user.setLastName(resultSet.getString("lastName"));
-                    user.setAge(resultSet.getByte("age"));
-                    arr.add(user);
-                }
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setName(resultSet.getString("name"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setAge(resultSet.getByte("age"));
+                arr.add(user);
             }
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
